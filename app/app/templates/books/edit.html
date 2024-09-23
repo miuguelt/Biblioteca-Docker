@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Editar Libro</h1>
+<form action="{{ url_for('book.edit', id=book.idBook) }}" method="post" class="form-group">
+    <label for="titleBook">Título:</label>
+    <input type="text" id="titleBook" name="titleBook" value="{{ book.titleBook }}" required>
+   
+    <label for="authorBook">Autor:</label>
+    <input type="text" id="authorBook" name="authorBook" value="{{ book.authorBook }}" required>
+    <button type="submit">Actualizar Libro</button>
+</form>
+
+{% endblock %}
+  
+

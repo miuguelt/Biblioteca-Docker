@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Lista de Libros</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>contraseña</th>
+            <th>Acciones</th>
+        </tr>
+        {% for user in data %}
+            <tr>
+                <td>{{ user.idUser }}</td>
+                <td>{{ user.nameUser }}</td>
+                <td>{{ user.passwordUser }}</td>
+                <td>
+                    <a href="{{ url_for('user.edit', id=user.idUser) }}">Editar</a>
+                    <a href="{{ url_for('user.delete', id=user.idUser) }}">Eliminar</a>                 
+                    <!-- Agrega aquí el enlace para eliminar -->
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}
+    

@@ -1,0 +1,54 @@
+    <!-- Menú de Navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="/">MiApp</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" 
+                  aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                  <!-- Usuarios -->
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarUsuarios" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Usuarios
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarUsuarios">
+                          <li><a class="dropdown-item" href="{{ url_for('user.index') }}">Listado</a></li>
+                          <li><a class="dropdown-item" href="{{ url_for('user.add') }}">Agregar</a></li>
+                      </ul>
+                  </li>
+                  <!-- Autores -->
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarAutores" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Autores
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarAutores">
+                          <li><a class="dropdown-item" href="{{ url_for('author.index') }}">Listado</a></li>
+                          <li><a class="dropdown-item" href="{{ url_for('author.add') }}">Agregar</a></li>
+                      </ul>
+                  </li>
+                  <!-- Libros -->
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarLibros" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Libros
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarLibros">
+                          <li><a class="dropdown-item" href="{{ url_for('book.index') }}">Listado</a></li>
+                          <li><a class="dropdown-item" href="{{ url_for('book.add') }}">Agregar</a></li>
+                      </ul>
+                  </li>
+                  <!-- Préstamos -->
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarPrestamos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Préstamos
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarPrestamos">
+                          <li><a class="dropdown-item" href="{{ url_for('loan.index') }}">Listado</a></li>
+                          <li><a class="dropdown-item" href="{{ url_for('loan.add') }}">Agregar</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+      </div>
+    </nav>

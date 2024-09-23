@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Añadir Préstamo de Computadora</h1>
+        <form action="{{ url_for('cloans.create_cloan') }}" method="post">
+            <div class="form-group">
+                <label for="computerId">ID de Computadora:</label>
+                <input type="number" class="form-control" id="computerId" name="computerId" required>
+            </div>
+            <div class="form-group">
+                <label for="userId">ID de Usuario:</label>
+                <input type="number" class="form-control" id="userId" name="userId" required>
+            </div>
+            <div class="form-group">
+                <label for="loanDate">Fecha de Préstamo:</label>
+                <input type="datetime-local" class="form-control" id="loanDate" name="loanDate">
+            </div>
+            <div class="form-group">
+                <label for="returnDate">Fecha de Devolución:</label>
+                <input type="datetime-local" class="form-control" id="returnDate" name="returnDate">
+            </div>
+            <div class="form-group">
+                <label for="status">Estado:</label>
+                <input type="text" class="form-control" id="status" name="status" value="Active">
+            </div>
+            <button type="submit" class="btn btn-primary">Añadir Préstamo</button>
+        </form>
+    </div>
+{% endblock %}
+
+
+

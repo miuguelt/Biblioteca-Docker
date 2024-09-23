@@ -1,0 +1,37 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "Login con flask",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	"customizations": {
+		"vscode": {
+			"settings": {			
+				"audioCues.enabled": "off",
+				"audioCues.lineHasError": false,
+				"audioCues.lineHasWarning": false,
+				"audioCues.noProblem": false,
+				"workbench.colorTheme": "Default Light+"				
+			},
+			"extensions": [
+				"franneck94.vscode-python-dev-extension-pack",
+                "ms-python.python",
+                "ms-mysql.mysql"
+			]
+		}
+	},
+	"forwardPorts": [
+		5000,
+		3307
+	],
+	"portsAttributes": {
+		"5000": {
+			"label": "Aplicación web"
+		},
+		"3307": {
+			"label": "Base de datos"
+		}
+	}
+	
+}
