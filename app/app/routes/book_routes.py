@@ -13,10 +13,10 @@ def index():
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        titulo = request.form['titleBook']
-        author = request.form['authorBook']
+        titleBook = request.form['titleBook']
+        authorId = request.form['authorId']
         
-        new_book = Book(titleBook=titulo, authorIdBook=author)
+        new_book = Book(titleBook=titleBook, authorId=authorId)
         db.session.add(new_book)
         db.session.commit()
         
@@ -31,11 +31,12 @@ def edit(id):
 
     if request.method == 'POST':
         book.titleBook = request.form['titleBook']
-        book.authorBook = request.form['authorBook']
+        book.authorId = request.form['authorId']
         db.session.commit()        
         return redirect(url_for('book.index'))
 
-    return render_template('books/edit.html', book=book)
+    authors = Author.query.all()
+    return render_template('books/edit.html', book=book, authors=authors)
 
 @bp.route('/delete/<int:id>')
 def delete(id):

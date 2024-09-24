@@ -9,6 +9,12 @@ def index():
     authors = Author.query.all()   
     return render_template('authors/index.html', data=authors)
 
+@bp.route('/list/<int:id>', methods=['GET', 'POST'])
+def list(id):
+    author = Author.query.get_or_404(id)
+    books = author.books
+    return render_template('authors/list.html', books=books)
+
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
@@ -42,9 +48,3 @@ def delete(id):
     db.session.commit()
 
     return redirect(url_for('author.index'))
-
-@bp.route('/List/<int:id>', methods=['GET', 'POST'])
-def list(id):
-    author = Author.query.get_or_404(id)
-    books = author.books
-    return render_template('authors/List.html', books=books)

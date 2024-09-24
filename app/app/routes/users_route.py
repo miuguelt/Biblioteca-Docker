@@ -12,9 +12,9 @@ def index():
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        name = request.form['nameUser']
-        password = request.form['passwordUser']        
-        new_user = User(nameUser=name, passwordUser=password)
+        nameUser = request.form['nameUser']
+        passwordUser = request.form['passwordUser']        
+        new_user = User(nameUser=nameUser, passwordUser=passwordUser)
         db.session.add(new_user)
         db.session.commit()
         
@@ -30,7 +30,7 @@ def edit(id):
         db.session.commit()        
         return redirect(url_for('user.index'))
 
-    return render_template('books/edit.html', user=user)
+    return render_template('users/edit.html', user=user)
 
 @bp.route('/delete/<int:id>')
 def delete(id):

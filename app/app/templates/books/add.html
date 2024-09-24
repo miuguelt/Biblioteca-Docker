@@ -10,8 +10,8 @@
         </div>
         
         <div class="mb-3">
-            <label for="authorBook" class="form-label">Autor:</label>
-            <select id="authorBook" name="authorBook" class="form-select rounded-pill">
+            <label for="authorId" class="form-label">Autor:</label>
+            <select id="authorId" name="authorId" class="form-select rounded-pill">
                 {% for author in data %}
                     <option value="{{ author.idAuthor }}">{{ author.nameAuthor }}</option>
                 {% endfor %}

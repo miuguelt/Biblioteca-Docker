@@ -7,8 +7,8 @@ class User(db.Model, UserMixin):
     nameUser = db.Column(db.String(80), unique=True, nullable=False)
     passwordUser = db.Column(db.String(120), nullable=False)
     
-    booksUser = db.relationship("Loan", back_populates="userLoan", lazy='dynamic')  # Cambia el nombre de la relación
-    loansUser = db.relationship("Loan", back_populates="userLoan", lazy='dynamic')  # Asegúrate de que el nombre coincida
-    
+    loansUser = db.relationship("Loan", back_populates="user", lazy='dynamic')
+    computerLoansUser = db.relationship('ComputerLoan', back_populates='user', lazy='dynamic')
+
     def get_id(self):
         return str(self.idUser)

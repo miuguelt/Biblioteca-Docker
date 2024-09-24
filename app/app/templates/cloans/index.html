@@ -6,12 +6,11 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Libro</th>
-            <th>Usuario</th>
+            <th>ID de Computadora</th>
+            <th>ID de Usuario</th>
             <th>Fecha de Préstamo</th>
             <th>Fecha de Devolución</th>
             <th>Estado</th>
-            <th>Multa</th>
             <th>Acciones</th>
         </tr>
     </thead>
@@ -19,28 +18,25 @@
         {% for loan in loans %}
         <tr>
             <td>{{ loan.idLoan }}</td>
-            <td>{{ loan.bookLoan.titleBook }}</td>
-            <td>{{ loan.userLoan.nameUser }}</td>
-            <td>{{ loan.loanDateLoan.strftime('%Y-%m-%d') }}</td>
-            <td>{{ loan.returnDateLoan.strftime('%Y-%m-%d') }}</td>
-            <td>{{ loan.statusLoan }}</td>
-            <td>{{ loan.fineLoan }}</td>
+            <td>{{ loan.computerId }}</td>
+            <td>{{ loan.userId }}</td>
+            <td>{{ loan.loanDate.strftime('%Y-%m-%d') }}</td>
+            <td>{{ loan.returnDate.strftime('%Y-%m-%d') if loan.returnDate else 'N/A' }}</td>
+            <td>{{ loan.status }}</td>
             <td>
                 <div class="d-flex justify-content-between">
-                    <a href="{{ url_for('loan.edit', id=loan.idLoan) }}" class="btn btn-sm btn-primary">
+                    <a href="{{ url_for('cloans.edit', id=loan.idLoan) }}" class="btn btn-sm btn-primary">
                         Editar
                     </a>
-                    <a href="{{ url_for('loan.delete', id=loan.idLoan) }}" class="btn btn-sm btn-danger">
-                        Eliminar
-                    </a>
-                    {% if loan.statusLoan == 'Active' %}
-                    <a href="{{ url_for('loan.return_book', id=loan.idLoan) }}" class="btn btn-sm btn-success">
-                        Devolver
-                    </a>
+                    <form action="{{ url_for('cloans.delete', id=loan.idLoan) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                    {% if loan.status == 'Active' %}
+                    <form action="{{ url_for('cloans.return_computer', id=loan.idLoan) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-success">Devolver</button>
+                    </form>
                     {% else %}
-                    <span class="btn btn-sm btn-secondary disabled">
-                        Devolver
-                    </span>
+                    <span class="btn btn-sm btn-secondary disabled">Devolver</span>
                     {% endif %}
                 </div>
             </td>
@@ -48,5 +44,5 @@
         {% endfor %}
     </tbody>
 </table>
-<a href="{{ url_for('loan.add') }}" class="btn btn-primary">Agregar Préstamo</a>
+<a href="{{ url_for('cloans.add') }}" class="btn btn-primary">Agregar Préstamo</a>
 {% endblock %}

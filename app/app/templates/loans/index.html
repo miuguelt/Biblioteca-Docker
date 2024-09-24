@@ -19,12 +19,12 @@
         {% for loan in loans %}
         <tr>
             <td>{{ loan.idLoan }}</td>
-            <td>{{ loan.bookLoan.titleBook }}</td>
-            <td>{{ loan.userLoan.nameUser }}</td>
-            <td>{{ loan.loanDateLoan.strftime('%Y-%m-%d') }}</td>
-            <td>{{ loan.returnDateLoan.strftime('%Y-%m-%d') }}</td>
-            <td>{{ loan.statusLoan }}</td>
-            <td>{{ loan.fineLoan }}</td>
+            <td>{{ loan.book.titleBook }}</td>
+            <td>{{ loan.user.nameUser }}</td>
+            <td>{{ loan.loanDate.strftime('%Y-%m-%d') }}</td>
+            <td>{{ loan.returnDate.strftime('%Y-%m-%d') }}</td>
+            <td>{{ loan.status }}</td>
+            <td>{{ loan.fine }}</td>
             <td>
                 <div class="d-flex justify-content-between">
                     <a href="{{ url_for('loan.edit', id=loan.idLoan) }}" class="btn btn-sm btn-primary">
@@ -33,7 +33,7 @@
                     <a href="{{ url_for('loan.delete', id=loan.idLoan) }}" class="btn btn-sm btn-danger">
                         Eliminar
                     </a>
-                    {% if loan.statusLoan == 'Active' %}
+                    {% if loan.status == 'Active' %}
                     <a href="{{ url_for('loan.return_book', id=loan.idLoan) }}" class="btn btn-sm btn-success">
                         Devolver
                     </a>

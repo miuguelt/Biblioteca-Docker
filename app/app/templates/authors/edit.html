@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Editar Nacionalidad</h1>
-    <form action="{{ url_for('author.edit', id=author.id) }}" method="post" class="form-group">
+    <h1>Editar Autor</h1>
+    <form action="{{ url_for('author.edit', id=author.idAuthor) }}" method="post" class="form-group">
         <label for="nameAuthor">Nombre:</label>
-        <input type="text" id="nameAuthor" name="nameAuthor" value="{{ author.nameAuthor }}" required>
+        <input type="text" id="nameAuthor" name="nameAuthor" value="{{ author.nameAuthor }}" required class="form-control">
         
         <label for="nationalityAuthor">Nacionalidad:</label>
-        <input type="text" id="nationalityAuthor" name="nationalityAuthor" value="{{ author.nationalityAuthor }}" required>
+        <input type="text" id="nationalityAuthor" name="nationalityAuthor" value="{{ author.nationalityAuthor }}" required class="form-control">
         
-        <button type="submit">Actualizar Nacionalidad</button>
+        <button type="submit" class="btn btn-primary">Actualizar Autor</button>
     </form>
-
 {% endblock %}
 

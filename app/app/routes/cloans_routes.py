@@ -1,48 +1,69 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, render_template, redirect, url_for
 from app import db
-from app.models.cloans import ComputerUserLoan
+from app.models.cloans import ComputerLoan
+from app.models.computers import Computer
+from app.models.users import User
+from datetime import datetime
 
-cloans_bp = Blueprint('cloans', __name__)
+bp = Blueprint('cloans', __name__, url_prefix='/cloans')
 
-@cloans_bp.route('/cloans', methods=['GET'])
-def get_cloans():
-    cloans = ComputerUserLoan.query.all()
-    return jsonify([cloan.__repr__() for cloan in cloans])
 
-@cloans_bp.route('/cloans/<int:id>', methods=['GET'])
-def get_cloan(id):
-    cloan = ComputerUserLoan.query.get_or_404(id)
-    return jsonify(cloan.__repr__())
+@bp.route('/', methods=['GET'])
+def index():
+    loans = ComputerLoan.query.all()
+    return render_template('cloans/index.html', loans=loans)
 
-@cloans_bp.route('/cloans', methods=['POST'])
-def create_cloan():
-    data = request.get_json()
-    new_cloan = ComputerUserLoan(
-        computerId=data['computerId'],
-        userId=data['userId'],
-        loanDate=data.get('loanDate', datetime.utcnow()),
-        returnDate=data.get('returnDate'),
-        status=data.get('status', 'Active')
-    )
-    db.session.add(new_cloan)
+@bp.route('/add', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        computerId = request.form['computerId']
+        userId = request.form['userId']
+        loanDate = request.form.get('loanDate', datetime.utcnow())
+        returnDate = request.form.get('returnDate')
+        status = request.form.get('status', 'Active')
+        
+        new_loan = ComputerLoan(
+            computerId=computerId,
+            userId=userId,
+            loanDate=loanDate,
+            returnDate=returnDate,
+            status=status
+        )
+        db.session.add(new_loan)
+        db.session.commit()
+        return redirect(url_for('cloans.index'))
+    
+    computers = Computer.query.all()
+    users = User.query.all()
+    return render_template('cloans/add.html', computers=computers, users=users)
+
+@bp.route('/update/<int:id>', methods=['GET', 'POST'])
+def edit(id):
+    loan = ComputerLoan.query.get_or_404(id)
+    if request.method == 'POST':
+        loan.computerId = request.form['computerId']
+        loan.userId = request.form['userId']
+        loan.loanDate = request.form['loanDate']
+        loan.returnDate = request.form['returnDate']
+        loan.status = request.form['status']
+        db.session.commit()
+        return redirect(url_for('cloans.index'))
+    
+    computers = Computer.query.all()
+    users = User.query.all()
+    return render_template('cloans/edit.html', loan=loan, computers=computers, users=users)
+
+@bp.route('/delete/<int:id>', methods=['POST'])
+def delete(id):
+    loan = ComputerLoan.query.get_or_404(id)
+    db.session.delete(loan)
     db.session.commit()
-    return jsonify(new_cloan.__repr__()), 201
+    return redirect(url_for('cloans.index'))
 
-@cloans_bp.route('/cloans/<int:id>', methods=['PUT'])
-def update_cloan(id):
-    data = request.get_json()
-    cloan = ComputerUserLoan.query.get_or_404(id)
-    cloan.computerId = data.get('computerId', cloan.computerId)
-    cloan.userId = data.get('userId', cloan.userId)
-    cloan.loanDate = data.get('loanDate', cloan.loanDate)
-    cloan.returnDate = data.get('returnDate', cloan.returnDate)
-    cloan.status = data.get('status', cloan.status)
+@bp.route('/return/<int:id>', methods=['POST'])
+def return_computer(id):
+    loan = ComputerLoan.query.get_or_404(id)
+    loan.status = 'Returned'
+    loan.returnDate = datetime.utcnow()
     db.session.commit()
-    return jsonify(cloan.__repr__())
-
-@cloans_bp.route('/cloans/<int:id>', methods=['DELETE'])
-def delete_cloan(id):
-    cloan = ComputerUserLoan.query.get_or_404(id)
-    db.session.delete(cloan)
-    db.session.commit()
-    return '', 204
+    return redirect(url_for('cloans.index'))

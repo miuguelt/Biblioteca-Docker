@@ -5,7 +5,7 @@ class Author(db.Model):
     nameAuthor = db.Column(db.String(255), nullable=False)
     nationalityAuthor = db.Column(db.String(255), nullable=False)
     
-    booksAuthor = db.relationship("Book", back_populates="authorBook", lazy='dynamic')
+    books = db.relationship("Book", back_populates="author", lazy='dynamic')
     
     def __repr__(self):
         return f'<Author {self.nameAuthor}>'

@@ -15,11 +15,11 @@ def index():
 @bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        book_id = request.form['bookIdLoan']
-        user_id = request.form['userIdLoan']
-        return_date = datetime.now() + timedelta(days=14)  # Préstamo por 14 días
+        bookId = request.form['bookId']
+        userId = request.form['userId']
+        returnDate = datetime.now() + timedelta(days=14)  # Préstamo por 14 días
         
-        new_loan = Loan(bookIdLoan=book_id, userIdLoan=user_id, returnDateLoan=return_date)
+        new_loan = Loan(bookId=bookId, userId=userId, returnDate=returnDate)
         db.session.add(new_loan)
         db.session.commit()
         
@@ -34,9 +34,9 @@ def edit(id):
     loan = Loan.query.get_or_404(id)
     
     if request.method == 'POST':
-        loan.returnDateLoan = datetime.strptime(request.form['returnDateLoan'], '%Y-%m-%d')
-        loan.fineLoan = float(request.form['fineLoan'])
-        loan.statusLoan = request.form['statusLoan']
+        loan.returnDate = datetime.strptime(request.form['returnDate'], '%Y-%m-%d')
+        loan.fine = float(request.form['fine'])
+        loan.status = request.form['status']
         db.session.commit()
         return redirect(url_for('loan.index'))
     
@@ -52,11 +52,11 @@ def delete(id):
 @bp.route('/return/<int:id>')
 def return_book(id):
     loan = Loan.query.get_or_404(id)
-    loan.statusLoan = 'Returned'
+    loan.status = 'Returned'
     
-    if datetime.now() > loan.returnDateLoan:
-        days_late = (datetime.now() - loan.returnDateLoan).days
-        loan.fineLoan = days_late * 1.0  # Multa de 1.0 por día de retraso
+    if datetime.now() > loan.returnDate:
+        days_late = (datetime.now() - loan.returnDate).days
+        loan.fine = days_late * 1.0  # Multa de 1.0 por día de retraso
     
     db.session.commit()
     return redirect(url_for('loan.index'))

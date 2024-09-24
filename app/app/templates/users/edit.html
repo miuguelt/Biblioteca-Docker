@@ -3,14 +3,18 @@
 {% block content %}
 <h1>Editar Usuario</h1>
 <form action="{{ url_for('user.edit', id=user.idUser) }}" method="post">
-    <label for="nameUser">Nombre:</label>
-    <input type="text" id="nameUser" name="nameUser" value="{{ user.nameUser }}" required>
+    <div class="form-group mb-3">
+        <label for="nameUser" class="form-label">Nombre:</label>
+        <input type="text" id="nameUser" name="nameUser" value="{{ user.nameUser }}" required class="form-control">
+    </div>
    
-    <label for="passwordUser">Contraseña:</label>
-    <input type="password" id="passwordUser" name="passwordUser" value="{{ user.passwordUser }}" required>
-    <button type="submit">Actualizar Usuario</button>
+    <div class="form-group mb-3">
+        <label for="passwordUser" class="form-label">Contraseña:</label>
+        <input type="password" id="passwordUser" name="passwordUser" value="{{ user.passwordUser }}" required class="form-control">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
 </form>
-
 
 {% endblock %}
 
