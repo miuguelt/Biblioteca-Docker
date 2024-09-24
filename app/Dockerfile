@@ -11,16 +11,16 @@ FROM python:3.12-slim AS app
 WORKDIR /workspace
 
 # Copia solo requirements.txt primero para aprovechar la caché de Docker
-COPY ./requirements.txt .
+COPY ./requirements.txt ./workspace
 
 # Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia el resto del contenido del directorio actual al directorio de trabajo en el contenedor
-COPY ./ .
+COPY ./ ./workspace
 
 EXPOSE 80
 
 # Comando por defecto para ejecutar la aplicación
-CMD ["python", "app/run1.py"]
+CMD ["python", "run1.py"]
 
