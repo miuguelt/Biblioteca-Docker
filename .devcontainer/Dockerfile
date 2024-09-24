@@ -11,7 +11,7 @@ FROM python:3.12-slim AS app
 WORKDIR /workspace
 
 # Copia el contenido del directorio actual al directorio de trabajo en el contenedor
-COPY ./app /workspace
+COPY ../app /workspace
 
 # Instala las dependencias
 RUN pip install -r requirements.txt
