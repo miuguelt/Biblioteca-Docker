@@ -22,14 +22,14 @@
 		}
 	},
 	"forwardPorts": [
-		5000,
-		3307
+		80,
+		3306
 	],
 	"portsAttributes": {
-		"5000": {
+		"80": {
 			"label": "Aplicación web"
 		},
-		"3307": {
+		"3306": {
 			"label": "Base de datos"
 		}
 	}
