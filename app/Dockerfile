@@ -1,8 +1,8 @@
 # Usa una imagen base de Python
 FROM python:3.12-slim AS app
 
-# Instala MySQL y otras dependencias necesarias
-RUN apt-get update && apt-get install -y mysql-server && apt-get clean
+RUN apt-get update && apt-get install -y gnupg \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5072E1F5
 
 # Copia el archivo de configuración de MySQL
 COPY /app/my.cnf /etc/mysql/my.cnf
