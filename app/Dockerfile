@@ -5,10 +5,10 @@ FROM python:3.12-slim AS app
 RUN apt-get update && apt-get install -y mysql-server && apt-get clean
 
 # Copia el archivo de configuración de MySQL
-COPY my.cnf /etc/mysql/my.cnf
+COPY /app/my.cnf /etc/mysql/my.cnf
 
 # Copia el script de inicialización
-COPY init.sql /docker-entrypoint-initdb.d/
+COPY /app/init.sql /docker-entrypoint-initdb.d/
 
 # Establece el directorio de trabajo en el contenedor
 WORKDIR /workspace
