@@ -1,19 +1,21 @@
 FROM python:3.12-slim AS app
 
-# Instala dependencias necesarias y MySQL
+# Instala las dependencias necesarias para MySQL
 RUN apt-get update && apt-get install -y \
     gnupg \
-    lsb-release \
     wget \
+    lsb-release \
     && wget https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb \
     && dpkg -i mysql-apt-config_0.8.22-1_all.deb \
-    && apt-get update && apt-get install -y mysql-server \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get update \
+    && apt-get install -y mysql-server \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copia el archivo de configuración de MySQL
+# Copia el archivo de configuración de MySQL (si lo tienes)
 COPY /app/my.cnf /etc/mysql/my.cnf
 
-# Copia el script de inicialización
+# Copia el script de inicialización (si lo tienes)
 COPY /app/init.sql /docker-entrypoint-initdb.d/
 
 # Establece el directorio de trabajo en el contenedor
@@ -31,5 +33,5 @@ COPY /app/ .
 # Expone los puertos necesarios
 EXPOSE 80 3306
 
-# Inicializa MySQL y luego ejecuta tu aplicación
-CMD service mysql start && mysql -e "CREATE DATABASE IF NOT EXISTS mydatabase;" && python run1.py
+# Comando para iniciar MySQL y luego la aplicación
+CMD service mysql start && python run1.py
