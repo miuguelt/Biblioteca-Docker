@@ -4,6 +4,7 @@ FROM python:3.12-slim AS app
 RUN apt-get update && apt-get install -y gnupg \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5072E1F5
 
+
 # Copia el archivo de configuración de MySQL
 COPY /app/my.cnf /etc/mysql/my.cnf
 
@@ -26,7 +27,5 @@ COPY /app/ .
 EXPOSE 80 3306
 
 # Configura MySQL y luego inicia la aplicación
-CMD service mysql start && \
-    mysql < /docker-entrypoint-initdb.d/init.sql && \
-    python run1.py
+CMD service mysql start && mysqld_safe && python run1.py
 
