@@ -14,13 +14,13 @@ COPY init.sql /docker-entrypoint-initdb.d/
 WORKDIR /workspace
 
 # Copia solo requirements.txt primero para aprovechar la caché de Docker
-COPY requirements.txt .
+COPY /app/requirements.txt .
 
 # Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia el resto del contenido del directorio actual al directorio de trabajo en el contenedor
-COPY . .
+COPY /app/ .
 
 # Expone el puerto 80 y 3306
 EXPOSE 80 3306
