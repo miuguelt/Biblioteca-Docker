@@ -1,12 +1,13 @@
 FROM python:3.12-slim AS app
 
-# Actualiza el sistema y instala las dependencias necesarias
+# Instala dependencias necesarias y MySQL
 RUN apt-get update && apt-get install -y \
     gnupg \
     lsb-release \
     wget \
-    && wget https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-server_8.0.31-1ubuntu20.04_amd64.deb \
-    && apt-get install -y ./mysql-server_8.0.31-1ubuntu20.04_amd64.deb \
+    && wget https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb \
+    && dpkg -i mysql-apt-config_0.8.22-1_all.deb \
+    && apt-get update && apt-get install -y mysql-server \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copia el archivo de configuración de MySQL
