@@ -1,6 +1,7 @@
 import os
-class Config:
+import secrets
 
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:my-secret-pw@db/flaskdb'
+class Config:
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///flaskdb.sqlite'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = os.urandom(24)
+    SECRET_KEY = os.getenv('SECRET_KEY', secrets.token_urlsafe(24))
