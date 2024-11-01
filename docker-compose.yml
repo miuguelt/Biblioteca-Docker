@@ -5,7 +5,7 @@ services:
       - ./app:/workspace
       - ./pip-cache:/root/.cache/pip
     ports:
-      - "443:443"
+      - "5000:5000"
     working_dir: /workspace
     command: >
       sh -c "
